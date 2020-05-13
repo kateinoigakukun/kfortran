@@ -1,3 +1,3 @@
 # kfortran
 
-A description of this package.
+kateinoigakukun's Fortran 2003 compiler
