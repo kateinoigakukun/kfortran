@@ -1,3 +1,0 @@
-HEADER_SEARCH_PATHS = $(inherited) /usr/local/Cellar/llvm@8/8.0.1_3/include
-LIBRARY_SEARCH_PATHS = $(inherited) /usr/local/Cellar/llvm@8/8.0.1_3/lib
-OTHER_LDFLAGS = $(inherited) -lLLVM
