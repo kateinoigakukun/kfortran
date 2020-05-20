@@ -20,6 +20,6 @@ let package = Package(
         .target(name: "CodeGen", dependencies: ["Parser"]),
         .testTarget(
             name: "kfortranTests",
-            dependencies: ["kfortran"]),
+            dependencies: ["Parser"]),
     ]
 )

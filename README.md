@@ -3,4 +3,4 @@
 kateinoigakukun's Fortran 2003 compiler
 
 
-Spec: https://www.jisc.go.jp/pdfa9/PDFView/ShowPDF/PAAAAIIo9err93JhztBM
+Spec: Search `X3001-1` from [JIS検索](https://www.jisc.go.jp/app/jis/general/GnrJISSearch.html)

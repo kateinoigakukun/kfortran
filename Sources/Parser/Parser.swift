@@ -4,6 +4,10 @@ public struct MainProgram {
     public let executions: [SimpleExecution]
 }
 
+public struct ProgramStmt {
+    public let name: String
+}
+
 public enum SimpleExecution: String, CaseIterable {
     case write
 }
