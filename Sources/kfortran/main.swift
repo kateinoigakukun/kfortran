@@ -8,7 +8,5 @@ struct KFrotran: ParsableCommand {
 
     func run() throws {
         let contents = try String(contentsOfFile: inputFile)
-        let tokens = try lex(contents)
-        let program = try Parser(tokens: tokens).parse()
     }
 }

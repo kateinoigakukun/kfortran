@@ -1,18 +1,27 @@
 import XCTest
 import class Foundation.Bundle
-import Parser
+@testable import Parser
 
 final class kfortranTests: XCTestCase {
-    func testLex() throws {
-        let code = """
-        program hello
-        write (*, *) 'Hello'
-        stop
-        end program hello
-        """
-        let tokens = try lex(code)
-        let parser = Parser(tokens: tokens)
-        let program = try parser.parse()
-        _ = program
+    
+    func testParsers() throws {
+        func success<S: ParsableSyntax>(_: S.Type, _ input: String, file: StaticString = #file, line: UInt = #line) {
+            XCTAssertNoThrow(try S.parser().parse(.root(input)).0, file: file, line: line)
+        }
+        
+        success(ProgramStmt.self, "PROGRAM hello")
+        success(EndProgramStmt.self, "END PROGRAM hello")
+        success(EndProgramStmt.self, "END PROGRAM")
+        success(WriteStmt.self, "WRITE (*, *) 'Hello'")
+        success(StopStmt.self, "STOP")
+
+
+        success(MainProgram.self, """
+                PROGRAM hello
+                WRITE (*, *) 'Hello'
+                STOP
+                END PROGRAM hello
+                """
+        )
     }
 }
