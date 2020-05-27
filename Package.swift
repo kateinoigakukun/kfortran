@@ -5,6 +5,10 @@ import PackageDescription
 let package = Package(
     name: "kfortran",
     platforms: [.macOS(.v10_14)],
+    products: [
+        .executable(name: "kfortran", targets: ["kfortran"]),
+        .library(name: "kfortran_Runtime", type: .static, targets: ["Runtime"]),
+    ],
     dependencies: [
         .package(name: "swift-argument-parser", url: "https://github.com/apple/swift-argument-parser", from: "0.0.1"),
         .package(name: "LLVM", url: "https://github.com/llvm-swift/LLVMSwift", .revision("188bfbb5")),
@@ -26,6 +30,7 @@ let package = Package(
                 .target(name: "Parser"),
                 .product(name: "LLVM", package: "LLVM"),
         ]),
+        .target(name: "Runtime", dependencies: []),
         .testTarget(
             name: "kfortranTests",
             dependencies: ["Parser"]),
