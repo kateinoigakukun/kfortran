@@ -12,8 +12,7 @@ jobs:
       run: /usr/bin/xcode-select --print-path
     - name: Install LLVM
       run: |
-        export PATH=/usr/local/opt/llvm/bin:"${PATH}"
-        brew update
+        export PATH=/usr/local/opt/llvm@8/bin:"${PATH}"
         brew install llvm@8
         swift package resolve
         sudo swift .build/checkouts/LLVMSwift/utils/make-pkgconfig.swift
