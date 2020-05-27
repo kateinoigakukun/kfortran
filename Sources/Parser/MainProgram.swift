@@ -1,5 +1,9 @@
 import Curry
 
+public func parseSyntax(_ input: String) throws -> MainProgram {
+    try MainProgram.parser().parse(.root(input)).0
+}
+
 public struct MainProgram: ParsableSyntax {
     public let programStmt: ProgramStmt
     public let executions: [ExecutableConstruct]
@@ -19,6 +23,10 @@ public struct ProgramStmt: ParsableSyntax {
     static func parser() -> SyntaxParser<Self> {
         curry(Self.init) <^> keyword("PROGRAM") *> identifier()
     }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
 public struct EndProgramStmt: ParsableSyntax {
@@ -26,5 +34,9 @@ public struct EndProgramStmt: ParsableSyntax {
     
     static func parser() -> SyntaxParser<Self> {
         curry(Self.init) <^> keyword("END PROGRAM") *> orNil(identifier())
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }

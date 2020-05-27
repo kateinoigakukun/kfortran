@@ -10,12 +10,20 @@ public struct CharLiteralConstant: ParsableSyntax, Expr {
                 <|> char("\"") *> stringUntil(["\""]) <* char("\"")
         )
     }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
 public struct IntLiteralConstant: ParsableSyntax, Expr {
     public let value: Int
     static func parser() -> SyntaxParser<IntLiteralConstant> {
         Self.init <^> number()
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }
 
@@ -36,6 +44,10 @@ public struct DefinedUnary: ParsableSyntax, Expr {
     public let expr: Expr
     static func parser() -> SyntaxParser<DefinedUnary> {
         curry(Self.init) <^> .parser() <*> primary()
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }
 

@@ -1,6 +1,6 @@
 import Curry
 
-protocol ParsableSyntax {
+protocol ParsableSyntax: Syntax {
     static func parser() -> SyntaxParser<Self>
 }
 
@@ -40,5 +40,9 @@ public struct DefinedOpName: ParsableSyntax {
                 DefinedOpName.init <^>
                     (char(".") *> (toString <^> many(letter())))
         )
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }

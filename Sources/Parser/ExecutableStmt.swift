@@ -6,9 +6,13 @@ public enum ExecutableConstruct: ParsableSyntax {
     static func parser() -> SyntaxParser<Self> {
         Self.action <^> actionStmt()
     }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
-public protocol ActionStmt {}
+public protocol ActionStmt: Syntax {}
 
 func actionStmt() -> SyntaxParser<ActionStmt> {
     func transform<T: ActionStmt>(_ parser: SyntaxParser<T>) -> SyntaxParser<ActionStmt> {
@@ -24,11 +28,19 @@ public struct IoUnit: ParsableSyntax {
     static func parser() -> SyntaxParser<IoUnit> {
         const(.init()) <^> char("*")
     }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
 public struct Format: ParsableSyntax {
     static func parser() -> SyntaxParser<Format> {
         const(.init()) <^> char("*")
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }
 
@@ -45,10 +57,18 @@ public struct WriteStmt: ParsableSyntax, ActionStmt {
             <*> skipSpaces() *> (char(",") *> skipSpaces() *> .parser()) <* char(")")
             <*> skipSpaces() *> expr()
     }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
 public struct StopStmt: ParsableSyntax, ActionStmt {
     static func parser() -> SyntaxParser<StopStmt> {
         .pure(Self()) <* keyword("STOP")
+    }
+    
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
     }
 }

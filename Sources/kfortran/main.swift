@@ -1,4 +1,5 @@
 import Parser
+import CodeGen
 import ArgumentParser
 import Foundation
 
@@ -8,5 +9,7 @@ struct KFrotran: ParsableCommand {
 
     func run() throws {
         let contents = try String(contentsOfFile: inputFile)
+        let programSyntax = try parseSyntax(contents)
+        
     }
 }

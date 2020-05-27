@@ -15,6 +15,7 @@ let package = Package(
             name: "kfortran",
             dependencies: [
                 .target(name: "Parser"),
+                .target(name: "CodeGen"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "LLVM", package: "LLVM"),
             ]),
