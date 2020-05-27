@@ -7,21 +7,6 @@ public func irgen(program: MainProgram) throws -> Module {
     return igm.module
 }
 
-class RuntimeFunctions {
-    let write: Function
-    init(builder: IRBuilder) {
-        write = builder.addFunction(
-            "kfortran_write",
-            type: FunctionType(
-                [
-                    PointerType(pointee: IntType.int8),
-                ],
-                VoidType()
-            )
-        )
-    }
-}
-
 class IRGenModule {
     
     let builder: IRBuilder
@@ -70,38 +55,4 @@ extension IRGenModule: SyntaxVisitor {
     func visit<E: Expr>(_ node: E) throws -> Void { fatalError() }
     
     typealias VisitResult = Void
-}
-
-
-import cllvm
-
-class IRExprEmitter: SyntaxVisitor {
-    typealias VisitResult = IRValue
-    
-    let igm: IRGenModule
-    init(igm: IRGenModule) {
-        self.igm = igm
-    }
-    
-    func emit(_ expr: Expr) throws -> IRValue {
-        try self.doVisit(expr)
-    }
-    
-    func visit(_ node: CharLiteralConstant) throws -> VisitResult {
-        if let global = igm.module.global(named: node.value) {
-            return global
-        }
-        let initializer = node.value.asLLVM()
-        let global = igm.builder.addGlobal(node.value, type: initializer.type)
-        var idxs = [0, 0].map { $0.asLLVM() as Optional }
-        global.initializer = initializer
-        return idxs.withUnsafeMutableBufferPointer { buf in
-            LLVMConstGEP(global.asLLVM(), buf.baseAddress, UInt32(buf.count))
-        }
-    }
-
-
-    func visit<T>(_ node: T) throws -> VisitResult {
-        fatalError()
-    }
 }

@@ -15,6 +15,10 @@ public struct MainProgram: ParsableSyntax {
             <*> many(skipSpaces() *> ExecutableConstruct.parser())
             <*> skipSpaces() *> .parser()
     }
+
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
 }
 
 public struct ProgramStmt: ParsableSyntax {
