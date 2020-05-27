@@ -11,7 +11,7 @@ class RuntimeFunctions {
     let write: Function
     init(builder: IRBuilder) {
         write = builder.addFunction(
-            "f_write",
+            "kfortran_write",
             type: FunctionType(
                 [
                     PointerType(pointee: IntType.int8),
