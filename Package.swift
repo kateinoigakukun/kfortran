@@ -21,7 +21,10 @@ let package = Package(
         .target(name: "Parser", dependencies: [
             .product(name: "Curry", package: "Curry")
         ]),
-        .target(name: "CodeGen", dependencies: ["Parser"]),
+        .target(name: "CodeGen", dependencies: [
+                .target(name: "Parser"),
+                .product(name: "LLVM", package: "LLVM"),
+        ]),
         .testTarget(
             name: "kfortranTests",
             dependencies: ["Parser"]),
