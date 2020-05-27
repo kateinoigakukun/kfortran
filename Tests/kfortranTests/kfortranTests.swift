@@ -14,6 +14,8 @@ final class kfortranTests: XCTestCase {
         success(EndProgramStmt.self, "END PROGRAM")
         success(WriteStmt.self, "WRITE (*, *) 'Hello'")
         success(StopStmt.self, "STOP")
+        success(AssignmentStmt.self, "a = 1")
+        success(AssignmentStmt.self, "a =1")
 
 
         success(MainProgram.self, """

@@ -72,3 +72,17 @@ public struct StopStmt: ParsableSyntax, ActionStmt {
         try visitor.visit(self)
     }
 }
+
+public struct AssignmentStmt: ParsableSyntax, ActionStmt {
+    public let variable: Variable
+    public let value: Expr
+    static func parser() -> SyntaxParser<AssignmentStmt> {
+        curry(AssignmentStmt.init)
+            <^> .parser() <* skipSpaces() <* char("=")
+            <*> skipSpaces() *> expr()
+    }
+
+    public func accept<V>(_ visitor: V) throws -> V.VisitResult where V : SyntaxVisitor {
+        try visitor.visit(self)
+    }
+}

@@ -9,6 +9,7 @@ public protocol SyntaxVisitor {
     func visit(_ node: EndProgramStmt) throws -> VisitResult
     func visit(_ node: WriteStmt) throws -> VisitResult
     func visit(_ node: StopStmt) throws -> VisitResult
+    func visit(_ node: AssignmentStmt) throws -> VisitResult
     func visit(_ node: DefinedOpName) throws -> VisitResult
     func visit(_ node: ExecutableConstruct) throws -> VisitResult
     func visit(_ node: IoUnit) throws -> VisitResult
@@ -16,6 +17,8 @@ public protocol SyntaxVisitor {
     func visit(_ node: CharLiteralConstant) throws -> VisitResult
     func visit(_ node: IntLiteralConstant) throws -> VisitResult
     func visit(_ node: DefinedUnary) throws -> VisitResult
+    func visit(_ node: ObjectName) throws -> VisitResult
+    func visit(_ node: Variable) throws -> VisitResult
 }
 
 extension SyntaxVisitor {

@@ -49,6 +49,12 @@ extension IRGenModule: SyntaxVisitor {
         builder.buildRet(IntType.int64.constant(0))
     }
     
+    func visit(_ node: AssignmentStmt) throws -> Void {
+        fatalError("unimplemented")
+    }
+
+    func visit(_ node: ObjectName) throws -> Void { fatalError() }
+    func visit(_ node: Variable) throws -> Void { fatalError()}
     func visit(_ node: DefinedOpName) throws -> Void { fatalError() }
     func visit(_ node: IoUnit) throws -> Void { fatalError() }
     func visit(_ node: Format) throws -> Void { fatalError() }
