@@ -1,9 +1,9 @@
 import Curry
 
-public protocol Expr {}
+public protocol Expr: Syntax {}
 
 public struct CharLiteralConstant: ParsableSyntax, Expr {
-    let value: String
+    public let value: String
     static func parser() -> SyntaxParser<CharLiteralConstant> {
         return Self.init <^> (
             char("'") *> stringUntil(["'"]) <* char("'")

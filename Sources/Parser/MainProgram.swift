@@ -11,7 +11,7 @@ public struct MainProgram: ParsableSyntax {
     
     static func parser() -> SyntaxParser<Self> {
         curry(Self.init)
-            <^> .parser()
+            <^> skipSpaces() *> .parser()
             <*> many(skipSpaces() *> ExecutableConstruct.parser())
             <*> skipSpaces() *> .parser()
     }

@@ -16,7 +16,12 @@ public protocol SyntaxVisitor {
     func visit(_ node: CharLiteralConstant) throws -> VisitResult
     func visit(_ node: IntLiteralConstant) throws -> VisitResult
     func visit(_ node: DefinedUnary) throws -> VisitResult
-    
+}
+
+extension SyntaxVisitor {
+    public func doVisit(_ node: Syntax) throws -> VisitResult {
+        try node.accept(self)
+    }
 }
 
 extension MainProgram: Syntax {
